@@ -189,12 +189,11 @@ class ProfessorTable extends React.Component {
                     <tbody>
                         {allItemRows}
                         <tr>
-                            <td colSpan="3">
-                                <div style={{ }}>
+                            <td colSpan="3" style={{ align: "center", textAlign: "center" }}>
+                                <div id="fuzzy-container" style={{ align: "center" }}>
                                     <FuzzySearch
                                         style={{
-                                            display: "flex",
-                                            flexDirection: "row",
+                                            align: "center",
                                             alignItems: "center",
                                             padding: "0.44rem"
                                         }}
@@ -212,19 +211,16 @@ class ProfessorTable extends React.Component {
                                                     <div
                                                         key={i}
                                                         style={style}
-                                                        onClick={() => { console.log(val);
-                                                            this.addRowWithData(val.key); }}>
+                                                        onClick={() => {
+                                                            console.log(val);
+                                                            this.addRowWithData(val.key);
+                                                        }}>
                                                         {val.id}
                                                     </div>
                                                 );
                                             });
                                         }}
                                     />
-                                    <MDBBtn
-                                        color="primary"
-                                        id="addBtn">
-                                        Add{" "}
-                                    </MDBBtn>
                                 </div>
                             </td>
                         </tr>
