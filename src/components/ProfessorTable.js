@@ -1,17 +1,34 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
-import { MDBProgress } from "mdbreact";
+import { MDBProgress, MDBBtn } from "mdbreact";
 import PropTypes from "prop-types";
 
 class ProfessorTable extends React.Component {
   state = {
-    rows: this.props.professorinfo,
-    expandedRows: []
+    rows: [],
+    expandedRows: [],
+    fake_rows: this.props.professorinfo
   };
 
   getColor = score => {
     return score >= 50 ? "success" : "danger";
   };
+
+  addRow() {
+    var rows = this.state.rows;
+    var fake_rows = this.state.fake_rows;
+    var name = this.refs.name.value;
+    //query for your data
+    //get request at that endpoint
+    var new_row = fake_rows.pop();
+    new_row.id = rows.length + 1;
+    if (name.length !== 0) {
+      new_row.name = name;
+    }
+    rows.push(new_row);
+    this.setState({ fake_rows: fake_rows });
+    this.setState({ rows: rows });
+  }
 
   handleRowClick(rowId) {
     const currentExpandedRows = this.state.expandedRows;
@@ -39,14 +56,26 @@ class ProfessorTable extends React.Component {
             {item.rating + "%"}
           </MDBProgress>
         </td>
-        <td style={{ textAlign: "right" }}>{item.reviews}</td>
+        <td style={{ textAlign: "left" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center"
+            }}
+          >
+            {item.reviews}{" "}
+            <img src="chevron.svg" alt="Show More" height="30px" width="30px" />
+          </div>
+        </td>
       </tr>
     ];
 
     if (this.state.expandedRows.includes(item.id)) {
       itemRows.push(
         <tr>
-          <td colspan="3">
+          <td colSpan="3">
             <div
               style={{
                 display: "flex",
@@ -65,7 +94,7 @@ class ProfessorTable extends React.Component {
               </div>
               <div
                 style={{
-                  width: "25%",
+                  width: "50%",
                   textAlign: "center",
                   display: "flex",
                   flexDirection: "column",
@@ -74,7 +103,7 @@ class ProfessorTable extends React.Component {
                 }}
               >
                 <div>
-                  Most Hated:<b>{item.worst}</b>
+                  <b>Controversy Score: {item.worstConfidence + "%"}</b>
                 </div>
                 <div>
                   <MDBProgress
@@ -83,27 +112,7 @@ class ProfessorTable extends React.Component {
                     color="danger"
                   />
                 </div>
-              </div>
-              <div
-                style={{
-                  width: "25%",
-                  textAlign: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                  padding: "1%",
-                  justifyContent: "center"
-                }}
-              >
-                <div>
-                  Most Loved:<b>{item.best}</b>
-                </div>
-                <div>
-                  <MDBProgress
-                    material
-                    value={item.bestConfidence}
-                    color="success"
-                  />
-                </div>
+                <div>N={item.numWorst}</div>
               </div>
             </div>
           </td>
@@ -122,7 +131,6 @@ class ProfessorTable extends React.Component {
   */
   render() {
     let allItemRows = [];
-
     this.state.rows.forEach(item => {
       const perItemRows = this.renderItem(item);
       allItemRows = allItemRows.concat(perItemRows);
@@ -134,7 +142,7 @@ class ProfessorTable extends React.Component {
           width: "70%",
           marginLeft: "15%",
           marginRight: "15%",
-          marginTop: "5%",
+          marginTop: "2%",
           marginBottom: "10%"
         }}
       >
@@ -160,7 +168,28 @@ class ProfessorTable extends React.Component {
               </th>
             </tr>
           </thead>
-          <tbody>{allItemRows}</tbody>
+          <tbody>
+            {allItemRows}
+            <tr>
+              <td colSpan="3">
+                <div style={{ textAlign: "center", alignItems: "center" }}>
+                  <input
+                    style={{ padding: "0.44rem " }}
+                    type="text"
+                    name="name"
+                    ref="name"
+                  />
+                  <MDBBtn
+                    color="primary"
+                    id="addBtn"
+                    onClick={this.addRow.bind(this)}
+                  >
+                    Add{" "}
+                  </MDBBtn>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </Table>
       </div>
     );
