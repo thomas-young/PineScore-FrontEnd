@@ -18,42 +18,50 @@ class ProfessorTable extends React.Component {
     var rows = this.state.rows;
     var fake_rows = this.state.fake_rows;
     var name = this.refs.name.value;
+    var data = {"Vaughn Booker": {"id": "Vaughn Booker", "summary": "'2 papers outlining main topics in the class and discussion posts, participation', 'I like how the professor leaves writing assignments open ended because it gives students a chance to explore the topics in new ways', 'I really appreciated the comprehensive feedback on papers.', 'I really enjoyed the two essays we had to write for the course.", "pinescore": [67, 28], "controversy_score": 55, "controversy_n": 6}, "Anne Phillips": {"id": "Anne Phillips", "summary": "I took this course because of all the protests that have been happening the past couple years at Dartmouth and I wanted to learn more about it.', 'I learned to analyze and think critically about sources and ideas.', 'I think that it really reinforced a lot of what I had already learned in my other courses.', 'I want to incorporate AAAS into my major/minor.', 'It made me more interested in the subject .', 'It set fairly high standards', 'Provided a class that I covered topics I was truly interested in and had a personal connection too.', 'I most defininetly and interested in taking similar classes', 'It has challenged me to improve my reading, writing, and analytical skills.", "pinescore": [64, 16], "controversy_score": 52, "controversy_n": 1}}
+
+    console.log(data[name])
     //query for your data
     //get request at that endpoint
-    var new_row = fake_rows.pop();
-    new_row.id = rows.length + 1;
-    if (name.length !== 0) {
-      new_row.name = name;
+    // var new_row = fake_rows.pop();
+    var new_row = data[name]
+    if (! new_row) {
+      alert("Professor Not Found")
+
     }
+    else {
+    new_row.id_num = rows.length + 1;
+
     rows.push(new_row);
     this.setState({ fake_rows: fake_rows });
     this.setState({ rows: rows });
+  }
   }
 
   handleRowClick(rowId) {
     const currentExpandedRows = this.state.expandedRows;
     const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
     const newExpandedRows = isRowCurrentlyExpanded
-      ? currentExpandedRows.filter(id => id !== rowId)
+      ? currentExpandedRows.filter(id_num => id_num !== rowId)
       : currentExpandedRows.concat(rowId);
 
     this.setState({ expandedRows: newExpandedRows });
   }
 
   renderItem(item) {
-    const clickCallback = () => this.handleRowClick(item.id);
+    const clickCallback = () => this.handleRowClick(item.id_num);
     const itemRows = [
-      <tr onClick={clickCallback} key={"row-data-" + item.id}>
+      <tr onClick={clickCallback} key={"row-data-" + item.id_num}>
         <td>
-          <b>{item.name}</b>
+          <b>{item.id}</b>
         </td>
         <td style={{ alignItems: "center" }}>
           <MDBProgress
-            color={this.getColor(item.rating)}
+            color={this.getColor(item.pinescore[0])}
             material
-            value={item.rating}
+            value={item.pinescore[0]}
           >
-            {item.rating + "%"}
+            {item.pinescore[0] + "%"}
           </MDBProgress>
         </td>
         <td style={{ textAlign: "left" }}>
@@ -65,14 +73,14 @@ class ProfessorTable extends React.Component {
               alignItems: "center"
             }}
           >
-            {item.reviews}{" "}
+            {item.pinescore[1]}{" "}
             <img src="chevron.svg" alt="Show More" height="30px" width="30px" />
           </div>
         </td>
       </tr>
     ];
 
-    if (this.state.expandedRows.includes(item.id)) {
+    if (this.state.expandedRows.includes(item.id_num)) {
       itemRows.push(
         <tr>
           <td colSpan="3">
@@ -90,7 +98,7 @@ class ProfessorTable extends React.Component {
                   padding: "1%"
                 }}
               >
-                <b>Consensus: </b> {item.consensus}
+                <b>Consensus: </b> {item.summary}
               </div>
               <div
                 style={{
@@ -103,16 +111,16 @@ class ProfessorTable extends React.Component {
                 }}
               >
                 <div>
-                  <b>Controversy Score: {item.worstConfidence + "%"}</b>
+                  <b>Controversy Score: {item.controversy_score + "%"}</b>
                 </div>
                 <div>
                   <MDBProgress
                     material
-                    value={item.worstConfidence}
+                    value={item.controversy_score}
                     color="danger"
                   />
                 </div>
-                <div>N={item.numWorst}</div>
+                <div>N={item.controversy_n}</div>
               </div>
             </div>
           </td>
