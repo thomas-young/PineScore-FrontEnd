@@ -13,7 +13,12 @@ class ProfessorTable extends React.Component {
     };
 
     getColor = score => {
-        return score >= 50 ? "success" : "danger";
+        if (score >= 75) {
+            return "success"
+        } else if (score >= 50) {
+            return "warning"
+        }
+        else return "danger"
     };
 
     addRow() {
@@ -30,7 +35,7 @@ class ProfessorTable extends React.Component {
         if (!new_row) {
             alert("Professor Not Found")
         }
-        else {
+        else if (rows.indexOf(new_row) == -1) {
             new_row.id_num = rows.length + 1;
             rows.push(new_row);
             this.setState({ fake_rows: fake_rows });
@@ -49,7 +54,7 @@ class ProfessorTable extends React.Component {
             alert("Professor Not Found");
             console.log(name);
         }
-        else {
+        else if (rows.indexOf(new_row) == -1) {
             new_row.id_num = rows.length + 1;
             rows.push(new_row);
             this.setState({ fake_rows: fake_rows });
@@ -170,7 +175,7 @@ class ProfessorTable extends React.Component {
                     <b>Professors</b>
                 </h1>
 
-                <Table striped bordered>
+                <Table striped bordered style={{ marginBottom: "35vh" }}>
                     <thead style={{ backgroundColor: "#dee2e6" }}>
                         <tr>
                             <th style={{ width: "15%", textAlign: "left", fontSize: "130%" }}>
@@ -190,37 +195,37 @@ class ProfessorTable extends React.Component {
                         {allItemRows}
                         <tr>
                             <td colSpan="3" style={{ align: "center", textAlign: "center" }}>
-                                <div id="fuzzy-container" style={{ align: "center" }}>
-                                    <FuzzySearch
-                                        style={{
-                                            align: "center",
-                                            alignItems: "center",
-                                            padding: "0.44rem"
-                                        }}
-                                        list={Object.keys(reviewData).map(function (k) {
-                                            var review = reviewData[k];
-                                            review["key"] = k;
-                                            return review;
-                                        })}
-                                        keys={["id"]}
-                                        resultsTemplate={(_, state, styles, _clickHandler) => {
-                                            return state.results.map((val, i) => {
-                                                const style = state.selectedIndex === i
-                                                    ? styles.selectedResultStyle : styles.resultsStyle;
-                                                return (
-                                                    <div
-                                                        key={i}
-                                                        style={style}
-                                                        onClick={() => {
-                                                            console.log(val);
-                                                            this.addRowWithData(val.key);
-                                                        }}>
-                                                        {val.id}
-                                                    </div>
-                                                );
-                                            });
-                                        }}
-                                    />
+                                <div style={{ display: "flex", justifyContent: "center", flexDirection: "row" }}>
+                                    <div id="fuzzy-container" style={{ alignSelf: "center" }}>
+                                        <FuzzySearch
+                                            style={{
+                                                padding: "0.44rem"
+                                            }}
+                                            list={Object.keys(reviewData).map(function (k) {
+                                                var review = reviewData[k];
+                                                review["key"] = k;
+                                                return review;
+                                            })}
+                                            keys={["id"]}
+                                            resultsTemplate={(_, state, styles, _clickHandler) => {
+                                                return state.results.map((val, i) => {
+                                                    const style = state.selectedIndex === i
+                                                        ? styles.selectedResultStyle : styles.resultsStyle;
+                                                    return (
+                                                        <div
+                                                            key={i}
+                                                            style={style}
+                                                            onClick={() => {
+                                                                console.log(val);
+                                                                this.addRowWithData(val.key);
+                                                            }}>
+                                                            {val.id}
+                                                        </div>
+                                                    );
+                                                });
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </td>
                         </tr>
