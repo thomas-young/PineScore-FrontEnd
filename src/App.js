@@ -1,8 +1,8 @@
 import React from "react";
-import ProfessorTable from "./components/ProfessorTable";
+import Main from "./components/Main";
 import StickyFooter from "react-sticky-footer";
 import Navbar from "react-bootstrap/Navbar";
-
+import { Link } from "react-router-dom";
 class App extends React.Component {
   state = {
     professors: [
@@ -10,10 +10,8 @@ class App extends React.Component {
         id: 1,
         name: "Thomas Corman",
         rating: 92,
-        best: " Projects",
-        bestConfidence: 80,
-        worst: " Tests",
         worstConfidence: 75,
+        numWorst: 52,
         consensus:
           " Lorem ipsum dolor sit amet, consecteturadipiscin gelit, sed do eiusmod tempor incididunt ut labore et dolorema gna aliqua. Ut enim ad minim veniam, quis nostrudexercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat.",
         reviews: 82
@@ -22,10 +20,8 @@ class App extends React.Component {
         id: 2,
         name: "Charles Palmer",
         rating: 98,
-        best: " Lectures",
-        bestConfidence: 60,
-        worst: " Readings",
         worstConfidence: 95,
+        numWorst: 3,
         consensus:
           " Lorem ipsum dolor sit amet, consecteturadipiscin gelit, sed do eiusmod tempor incididunt ut labore et dolorema gna aliqua. Ut enim ad minim veniam, quis nostrudexercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat.",
         reviews: 51
@@ -34,10 +30,8 @@ class App extends React.Component {
         id: 3,
         name: "Phil Hanlon",
         rating: 35,
-        best: " Mustache",
-        bestConfidence: 99,
-        worst: " Moves",
         worstConfidence: 55,
+        numWorst: 45,
         consensus:
           " Lorem ipsum dolor sit amet, consecteturadipiscin gelit, sed do eiusmod tempor incididunt ut labore et dolorema gna aliqua. Ut enim ad minim veniam, quis nostrudexercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat.",
         reviews: 666
@@ -46,10 +40,8 @@ class App extends React.Component {
         id: 4,
         name: "Xia Zhou",
         rating: 84,
-        best: "Labs",
-        bestConfidence: 69,
-        worst: "Lectures",
         worstConfidence: 76,
+        numWorst: 23,
         consensus:
           " Lorem ipsum dolor sit amet, consecteturadipiscin gelit, sed do eiusmod tempor incididunt ut labore et dolorema gna aliqua. Ut enim ad minim veniam, quis nostrudexercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat.",
         reviews: 76
@@ -58,10 +50,8 @@ class App extends React.Component {
         id: 5,
         name: "Andreas Bentz",
         rating: 45,
-        best: " Econometrics",
-        bestConfidence: 69,
-        worst: " Slides",
         worstConfidence: 96,
+        numWorst: 56,
         consensus:
           " Lorem ipsum dolor sit amet, consecteturadipiscin gelit, sed do eiusmod tempor incididunt ut labore et dolorema gna aliqua. Ut enim ad minim veniam, quis nostrudexercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat.",
         reviews: 43
@@ -70,10 +60,8 @@ class App extends React.Component {
         id: 6,
         name: "Robert Drysdale",
         rating: 51,
-        best: " He Gone",
-        bestConfidence: 87,
-        worst: " Shouting",
         worstConfidence: 55,
+        numWorst: 32,
         consensus:
           " Lorem ipsum dolor sit amet, consecteturadipiscin gelit, sed do eiusmod tempor incididunt ut labore et dolorema gna aliqua. Ut enim ad minim veniam, quis nostrudexercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat.",
         reviews: 102
@@ -82,10 +70,8 @@ class App extends React.Component {
         id: 7,
         name: "Tim Hemdrich",
         rating: 71,
-        best: " Sauce Boss",
-        bestConfidence: 37,
-        worst: "Livid",
         worstConfidence: 75,
+        numWorst: 11,
         consensus:
           " Lorem ipsum dolor sit amet, consecteturadipiscin gelit, sed do eiusmod tempor incididunt ut labore et dolorema gna aliqua. Ut enim ad minim veniam, quis nostrudexercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat.",
         reviews: 122
@@ -94,10 +80,8 @@ class App extends React.Component {
         id: 8,
         name: "Sal McSanders",
         rating: 61,
-        best: " Slippery",
-        bestConfidence: 27,
-        worst: " Smell",
         worstConfidence: 95,
+        numWorst: 22,
         consensus:
           " Lorem ipsum dolor sit amet, consecteturadipiscin gelit, sed do eiusmod tempor incididunt ut labore et dolorema gna aliqua. Ut enim ad minim veniam, quis nostrudexercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat.",
         reviews: 5
@@ -108,10 +92,23 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Navbar bg="light" variant="light">
-          <Navbar.Brand>PineScore</Navbar.Brand>
+        <Navbar
+          bg="light"
+          variant="light"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <Link style={{ textAlign: "center" }} to="/">
+            <Navbar.Brand>PineScore</Navbar.Brand>{" "}
+          </Link>
+          <Link style={{ marginRight: "1%" }} to="/info">
+            Info
+          </Link>
         </Navbar>
-        <ProfessorTable professorinfo={this.state.professors} />
+        <Main professorinfo={this.state.professors} />
         <StickyFooter
           bottomThreshold={500}
           normalStyles={{
