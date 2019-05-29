@@ -177,15 +177,15 @@ class ProfessorTable extends React.Component {
                 <Table striped bordered style={{ marginBottom: "35vh" }}>
                     <thead style={{ backgroundColor: "#dee2e6" }}>
                         <tr>
-                            <th style={{ width: "15%", textAlign: "left", fontSize: "130%" }}>
+                            <th style={{ width: "20%", textAlign: "center", fontSize: "130%" }}>
                                 Name
                             </th>
                             <th
-                                style={{ width: "75%", textAlign: "center", fontSize: "130%" }} >
+                                style={{ width: "60%", textAlign: "center", fontSize: "130%" }} >
                                 Pinescore
                             </th>
                             <th
-                                style={{ width: "15%", textAlign: "right", fontSize: "130%" }} >
+                                style={{ width: "20%", textAlign: "center", fontSize: "130%" }} >
                                 Ratings
                             </th>
                         </tr>
