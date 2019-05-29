@@ -26,7 +26,6 @@ class ProfessorTable extends React.Component {
         var fake_rows = this.state.fake_rows;
         var name = this.refs.name.value;
         var data = reviewData;
-        console.log(data[name])
 
         //query for your data
         //get request at that endpoint
