@@ -18,7 +18,7 @@ class ProfessorTable extends React.Component {
         } else if (score >= 50) {
             return "warning"
         }
-        else return "danger"
+        return "danger"
     };
 
     addRow() {
@@ -26,15 +26,11 @@ class ProfessorTable extends React.Component {
         var fake_rows = this.state.fake_rows;
         var name = this.refs.name.value;
         var data = reviewData;
-
-        //query for your data
-        //get request at that endpoint
-        // var new_row = fake_rows.pop();
         var new_row = data[name]
+
         if (!new_row) {
             alert("Professor Not Found")
-        }
-        else if (rows.indexOf(new_row) == -1) {
+        } else if (rows.indexOf(new_row) === -1) {
             new_row.id_num = rows.length + 1;
             rows.push(new_row);
             this.setState({ fake_rows: fake_rows });
@@ -52,8 +48,7 @@ class ProfessorTable extends React.Component {
         if (!new_row) {
             alert("Professor Not Found");
             console.log(name);
-        }
-        else if (rows.indexOf(new_row) == -1) {
+        } else if (rows.indexOf(new_row) === -1) {
             new_row.id_num = rows.length + 1;
             rows.push(new_row);
             this.setState({ fake_rows: fake_rows });
@@ -75,15 +70,14 @@ class ProfessorTable extends React.Component {
         const clickCallback = () => this.handleRowClick(item.id_num);
         const itemRows = [
             <tr onClick={clickCallback} key={"row-data-" + item.id_num}>
-                <td>
+                <td style={{ verticalAlign: "middle", textAlign: "center" }}>
                     <b>{item.id}</b>
                 </td>
-                <td style={{ alignItems: "center" }}>
+                <td style={{ verticalAlign: "middle", textAlign: "center" }}>
                     <MDBProgress
                         color={this.getColor(item.pinescore[0])}
                         material
-                        value={item.pinescore[0]}
-                    >
+                        value={item.pinescore[0]} >
                         {item.pinescore[0] + "%"}
                     </MDBProgress>
                 </td>
@@ -94,8 +88,7 @@ class ProfessorTable extends React.Component {
                             flexDirection: "row",
                             justifyContent: "space-between",
                             alignItems: "center"
-                        }}
-                    >
+                        }} >
                         {item.pinescore[1]}{" "}
                         <img src="chevron.svg" alt="Show More" height="30px" width="30px" />
                     </div>
@@ -112,15 +105,13 @@ class ProfessorTable extends React.Component {
                                 display: "flex",
                                 flexDirection: "row",
                                 justifyContent: "space-between"
-                            }}
-                        >
+                            }} >
                             <div
                                 style={{
                                     textAlign: "left",
                                     width: "50%",
                                     padding: "1%"
-                                }}
-                            >
+                                }} >
                                 <b>Consensus: </b> {item.summary}
                             </div>
                             <div
@@ -131,8 +122,7 @@ class ProfessorTable extends React.Component {
                                     flexDirection: "column",
                                     padding: "1%",
                                     justifyContent: "center"
-                                }}
-                            >
+                                }} >
                                 <div>
                                     <b>Controversy Score: {item.controversy_score + "%"}</b>
                                 </div>
@@ -140,8 +130,7 @@ class ProfessorTable extends React.Component {
                                     <MDBProgress
                                         material
                                         value={item.controversy_score}
-                                        color="danger"
-                                    />
+                                        color="danger" />
                                 </div>
                                 <div>{item.controversy_n} people found this class controversial.</div>
                             </div>
@@ -150,7 +139,6 @@ class ProfessorTable extends React.Component {
                 </tr>
             );
         }
-
         return itemRows;
     }
 
@@ -170,11 +158,11 @@ class ProfessorTable extends React.Component {
                     marginTop: "2%",
                     marginBottom: "10%"
                 }} >
-                <h1>
+                <h1 style={{ lineHeight: "1.5em" }}>
                     <b>Professors</b>
                 </h1>
 
-                <Table striped bordered style={{ marginBottom: "35vh" }}>
+                <Table striped bordered style={{ marginBottom: "33vh" }}>
                     <thead style={{ backgroundColor: "#dee2e6" }}>
                         <tr>
                             <th style={{ width: "20%", textAlign: "center", fontSize: "130%" }}>
