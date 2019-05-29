@@ -1,6 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
-import { MDBProgress, MDBBtn } from "mdbreact";
+import MDBProgress from "mdbreact";
 import PropTypes from "prop-types";
 import FuzzySearch from "react-fuzzy";
 import reviewData from '../data.json';
